@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>간단한 채팅 서버</title>
+</head>
+<body>
+    <h1>채팅방</h1>
+    <div>
+        <label for="userInput">이름:</label>
+        <input type="text" id="userInput" />
+    </div>
+    <div>
+        <label for="messageInput">메시지:</label>
+        <input type="text" id="messageInput" />
+        <button id="sendButton">전송</button>
+    </div>
+    <hr />
+    <ul id="messagesList"></ul>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.min.js"></script>
+    <script src="chat.js"></script>
+</body>
+</html>
