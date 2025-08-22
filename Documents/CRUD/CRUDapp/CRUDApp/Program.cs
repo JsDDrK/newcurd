@@ -6,12 +6,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// ⭐ 세션 서비스 추가
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(30); // 세션 유지 시간 (예: 30분)
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // 세션 유지 시간 
     options.Cookie.HttpOnly = true; // 클라이언트 스크립트에서 접근 불가
-    options.Cookie.IsEssential = true; // 필수 쿠키로 설정 (GDPR 준수 등)
+    options.Cookie.IsEssential = true; // 필수 쿠키로 설정 
 });
 
 
@@ -33,7 +32,6 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-// ⭐ 세션 미들웨어 추가
 app.UseSession();
 
 app.UseAuthorization();
@@ -44,3 +42,4 @@ app.MapControllerRoute(
 
 
 app.Run();
+
