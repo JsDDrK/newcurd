@@ -33,7 +33,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-// ⭐ 세션 미들웨어 추가 (인증/인가 미들웨어보다 앞에 위치하는 것이 일반적입니다)
+// ⭐ 세션 미들웨어 추가
 app.UseSession();
 
 app.UseAuthorization();
@@ -41,5 +41,6 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 
 app.Run();
