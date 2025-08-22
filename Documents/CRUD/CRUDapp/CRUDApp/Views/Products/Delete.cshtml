@@ -1,0 +1,57 @@
+@model CRUDApp.Models.Product
+
+@{
+    ViewData["Title"] = "Delete";
+    bool isAdmin = ViewBag.IsAdmin ?? false; // 컨트롤러에서 전달받은 isAdmin 값 사용
+}
+
+<h1>삭제</h1>
+
+<h3>정말 이 게시물을 삭제하시겠습니까?</h3>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<div>
+    <h4>게시판</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            작성자
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            제목
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Title) @* Title 표시 *@
+        </dd>
+        <dt class = "col-sm-2">
+            내용
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        @if (!isAdmin) // 관리자가 아닐 때만 비밀번호 입력란 표시
+        {
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+            </div>
+        }
+        else // 관리자일 경우, 비밀번호 필드는 Model Binding을 위해 숨겨진 필드로 전달 (기본값 또는 안전한 값)
+        {
+            <input type="hidden" asp-for="Password" value="admin_default_password_safe" />
+        }
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">뒤로가기</a>
+    </form>
+</div>

@@ -1,0 +1,57 @@
+@model CRUDApp.Models.Product
+
+@{
+    ViewData["Title"] = "Edit";
+    bool isAdmin = ViewBag.IsAdmin ?? false; // 컨트롤러에서 전달받은 isAdmin 값 사용
+}
+
+<h1>수정</h1>
+
+<h4>게시판</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label> @* Title 필드 추가 *@
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea asp-for="Description" class="form-control" rows="5"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            @if (!isAdmin) // 관리자가 아닐 때만 비밀번호 입력란 표시
+            {
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label"></label>
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+            }
+            else // 관리자일 경우, 비밀번호 필드는 Model Binding을 위해 숨겨진 필드로 전달 (기본값 또는 안전한 값)
+            {
+                <input type="hidden" asp-for="Password" value="admin_default_password_safe" />
+            }
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">뒤로가기</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,55 @@
+@model IEnumerable<CRUDApp.Models.Product>
+
+@{
+    ViewData["Title"] = "게시판";
+}
+
+<h1>게시판</h1>
+
+<p>
+    <a asp-action="Create">작성</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                <a href="#" onclick="openDetailsWindow('@Url.Action("Details", new { id = item.Id })'); return false;" class="text-primary">@Html.DisplayFor(modelItem => item.Title)</a>
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">수정</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">삭제</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        function openDetailsWindow(url) {
+            // 새 팝업 창의 크기 및 위치 설정
+            var width = 600;
+            var height = 400;
+            var left = (screen.width / 2) - (width / 2);
+            var top = (screen.height / 2) - (height / 2);
+
+            // 팝업 창을 엽니다. 'PostDetails'는 창의 이름입니다.
+            window.open(url, 'PostDetails', 'width=' + width + ',height=' + height + ',top=' + top + ',left=' + left + ',resizable=yes,scrollbars=yes');
+        }
+    </script>
+}
